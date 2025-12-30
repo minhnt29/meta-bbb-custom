@@ -1,0 +1,35 @@
+BeagleBone Black Custom Image Layer
+====================================
+
+This layer provides a custom image for BeagleBone Black with:
+- UART console (ttyS0) support
+- USB Ethernet gadget with DHCP server
+
+Features:
+---------
+1. UART Console: Serial console on ttyS0 at 115200 baud
+2. USB Ethernet: USB gadget mode with DHCP server
+   - BeagleBone IP: 192.168.7.2
+   - Client IP range: 192.168.7.1 (single IP)
+   - DNS server: 192.168.7.2
+3. SSH Server: OpenSSH server enabled with root login
+   - SSH access: ssh root@192.168.7.2
+   - Root login allowed (no password by default)
+
+Usage:
+------
+1. Add this layer to bblayers.conf:
+   /path/to/meta-bbb-custom
+
+2. Build the image:
+   bitbake beaglebone-black-image
+
+3. Flash to SD card and boot
+
+Dependencies:
+-------------
+- meta
+- meta-poky
+- meta-yocto-bsp (or meta-ti for BeagleBone support)
+- meta-openembedded/meta-networking (for dnsmasq)
+

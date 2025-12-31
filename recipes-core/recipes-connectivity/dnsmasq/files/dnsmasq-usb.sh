@@ -20,12 +20,12 @@ if ! ip link show ${USB_IF} >/dev/null 2>&1; then
 fi
 
 ip link set usb0 up
-ip addr add $IP_ADDR dev usb0 || true
+ip addr flush dev usb0
+ip addr add $IP_ADDR dev usb0
 
-echo "${USB_IF} found, starting dnsmasq"
+echo "${USB_IF} ready, starting dnsmasq"
 
 exec /usr/bin/dnsmasq \
-    -x /run/dnsmasq.pid \
-    -7 /etc/dnsmasq.d \
+    --no-daemon \
+    --conf-dir=/etc/dnsmasq.d \
     --local-service
-

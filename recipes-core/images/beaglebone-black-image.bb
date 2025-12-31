@@ -13,6 +13,8 @@ IMAGE_INSTALL = "\
     openssh \
     openssh-sshd \
     openssh-sftp-server \
+    nano \
+    libstdc++ \
 "
 
 IMAGE_FEATURES += "allow-root-login"

@@ -6,6 +6,7 @@ inherit core-image
 IMAGE_INSTALL = "\
     packagegroup-core-boot \
     ${CORE_IMAGE_EXTRA_INSTALL} \
+    kernel-module-spidev \
     usb-gadget \
     dnsmasq \
     systemd-serialgetty \
@@ -16,6 +17,8 @@ IMAGE_INSTALL = "\
     nano \
     libstdc++ \
 "
+
+KERNEL_MODULE_AUTOLOAD += "spidev"
 
 IMAGE_FEATURES += "allow-root-login"
 

@@ -16,6 +16,7 @@ IMAGE_INSTALL = "\
     openssh-sftp-server \
     nano \
     libstdc++ \
+    gdbserver \
 "
 
 KERNEL_MODULE_AUTOLOAD += "spidev"

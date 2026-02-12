@@ -17,6 +17,8 @@ IMAGE_INSTALL = "\
     nano \
     libstdc++ \
     gdbserver \
+    libgpiod-tools \
+    valgrind \
 "
 
 KERNEL_MODULE_AUTOLOAD += "spidev"

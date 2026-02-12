@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * BeagleBone Black
+ * P9.13 -> GPIO0_31 with interrupt
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+&{/chosen} {
+    overlays {
+        BB-INT-IRQ.kernel = __TIMESTAMP__;
+    };
+};
+
+&am33xx_pinmux {
+    bb_gpio_p9_13_pins: pinmux_bb_gpio_p9_13_pins {
+        pinctrl-single,pins = <
+            AM33XX_PADCONF(
+                AM335X_PIN_GPMC_AD9,   /* P9.13 */
+                PIN_INPUT_PULLUP,
+                MUX_MODE7             /* GPIO */
+            )
+        >;
+    };
+};
+
+&gpio0 {
+    int_irq: int_irq {
+        compatible = "generic-uio";
+
+        pinctrl-names = "default";
+        pinctrl-0 = <&bb_gpio_p9_13_pins>;
+
+        gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
+        interrupt-parent = <&gpio0>;
+        interrupts = <31 IRQ_TYPE_EDGE_FALLING>;
+
+        status = "okay";
+    };
+};

@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: GPL-2.0-only OR MIT
+/*
+ * DT Overlay for SPI2 connections within the expansion header.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include "k3-pinctrl.h"
+
+&{/chosen} {
+    overlays {
+        PB2_SPI2.kernel = __TIMESTAMP__;
+    };
+};
+
+&main_pmx0 {
+    vf_spi_pins: vf-spi-default-pins {
+        pinctrl-single,pins = <
+            AM62X_IOPAD(0x01b0, PIN_OUTPUT, 1) /* P1.06: (A20) MCASP0_ACLKR.SPI2_CLK */
+            AM62X_IOPAD(0x01ac, PIN_OUTPUT, 1) /* P1.08: (E19) MCASP0_AFSR.SPI2_CS0 */
+            AM62X_IOPAD(0x0194, PIN_INPUT, 1)  /* P1.10: (B19) MCASP0_AXR3.SPI2_D0 (MISO) */
+            AM62X_IOPAD(0x0198, PIN_OUTPUT, 1) /* P1.12: (A19) MCASP0_AXR2.SPI2_D1 (MOSI) */
+        >;
+    };
+};
+
+&main_spi2 {
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&vf_spi_pins>;
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    channel@0 {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        compatible = "rohm,dh2228fv";
+        symlink = "bone/spi/2.0";
+
+        reg = <0>;
+        spi-max-frequency = <50000000>;
+    };
+};
